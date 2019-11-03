@@ -1,5 +1,17 @@
 version: '3.6'
 services:
+  client:
+    container_name: todo-app-client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - monogo
+      - node
+    environment:
+      - NODE_ENV=development
   node:
     container_name: todo-app-backend
     restart: always

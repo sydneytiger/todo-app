@@ -10,7 +10,10 @@
     "dev": "nodemon index.js"
   },
   "author": "Tiger Chen",
-  "license": "ISC",
+  "license": "MIT",
+  "engines": {
+    "node": "10.15.3"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
