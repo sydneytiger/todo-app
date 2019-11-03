@@ -1,0 +1,23 @@
+version: '3.6'
+services:
+  node:
+    container_name: todo-app-backend
+    restart: always
+    build:
+      context: ./node
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=development
+    ports:
+      - '8686:8686'
+    depends_on:
+      - mongo
+    links:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./node/mongo-volume:/data/db
