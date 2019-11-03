@@ -1,6 +1,9 @@
-# todo-app-backend
+# todo-app
 
-## how to run with docker
+### Usage
+*Must have Docker installed
+
+### how to run with docker
 ```
 docker-compose up -d
 ```
