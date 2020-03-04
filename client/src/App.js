@@ -1,26 +1,42 @@
 import React from 'react';
-import logo from './logo.svg';
+import { v4 as uuidv4} from 'uuid';
+
+import Header from './components/Header';
+import Todos from './components/Todos';
+
+import './reset.css';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export class App extends React.Component {
+  state = {
+    todos: [
+      {
+        id: uuidv4(),
+        title: 'learn react',
+        completed: true
+      },
+      {
+        id: uuidv4(),
+        title: 'learn GraphQl',
+        completed: false
+      },
+      {
+        id: uuidv4(),
+        title: 'learn mysql',
+        completed: false
+      }
+    ]
+  }
+
+  render() {
+    return (
+      <div>
+        <Header />
+        <Todos todos={this.state.todos}/>
+      </div>
+    )
+  }
 }
 
-export default App;
+export default App
+
