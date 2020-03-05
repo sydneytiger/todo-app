@@ -28,11 +28,23 @@ export class App extends React.Component {
     ]
   }
 
+  onChange = id => {
+    const newTodos = [...this.state.todos];
+    newTodos.map(item => {
+      if(item.id === id) item.completed = !item.completed;
+    });
+    this.setState({ todos: newTodos})
+  }
+
+  onDelete = id => {
+    this.setState({todos: [...this.state.todos.filter(f => f.id !== id)]});
+  }
+
   render() {
     return (
       <div>
         <Header />
-        <Todos todos={this.state.todos}/>
+        <Todos todos={this.state.todos} onChange={this.onChange} onDelete={this.onDelete}/>
       </div>
     )
   }
