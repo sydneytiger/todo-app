@@ -5,9 +5,19 @@ function TodoItem({todo, onChange, onDelete}) {
 
   return (
     <div className={`todoItem ${todo.completed ? 'completed': ''}`}>
-      <input type="checkbox" value={todo.title} checked={todo.completed} onChange={onChange.bind(this, todo.id)}/>
-      {todo.title}
-      <button className="btnDel" onClick={onDelete.bind(this, todo.id)}>X</button>
+      <input 
+        type="checkbox" 
+        value={todo.title} 
+        checked={todo.completed} 
+        onChange={onChange.bind(this, todo.id)}
+        id={todo.id}
+      />
+      <label 
+        className="checkboxtext" 
+        htmlFor={todo.id}>
+        {todo.title}
+      </label>
+      <a href="#" className="btnDel" onClick={onDelete.bind(this, todo.id)} />
     </div>
   )
 }

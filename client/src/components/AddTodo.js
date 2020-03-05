@@ -10,18 +10,21 @@ class AddTodo extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
-    this.props.AddTodo(this.state.inputValue);
-    this.setState({ inputValue: '' });
+    if(this.state.inputValue.trim()){
+      this.props.AddTodo(this.state.inputValue);
+      this.setState({ inputValue: '' });
+    }
   }
   
   render() { 
     return (  
-      <form onSubmit={this.onSubmit} className="flexBox">
+      <form onSubmit={this.onSubmit} className="addTodo">
         <input 
           type="text" 
           placeholder="Add todo..." 
           value={this.state.inputValue} 
           onChange={this.handleChange}
+          className='textBox'
           />
         <input className="btn" value="Submit" type="submit"></input>
       </form>
