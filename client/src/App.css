@@ -66,3 +66,16 @@ a {
 .todoItem.completed {
   text-decoration: line-through;
 }
+
+.flexBox {
+  display: flex;
+}
+
+.flexBox input[type="submit"] {
+  flex: 1;
+}
+
+.flexBox input[type="text"] {
+  flex: 10;
+  padding: 5px;
+}
