@@ -9,7 +9,7 @@ function TodoItem({todo, onChange, onDelete}) {
         type="checkbox" 
         value={todo.title} 
         checked={todo.completed} 
-        onChange={onChange.bind(this, todo.id)}
+        onChange={onChange.bind(this, todo)}
         id={todo.id}
       />
       <label 

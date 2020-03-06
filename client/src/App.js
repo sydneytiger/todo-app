@@ -22,17 +22,19 @@ export class App extends React.Component {
     });
   }
 
-  onChange = id => {
-    const newTodos = [...this.state.todos];
-    newTodos.map(item => {
-      if(item.id === id) item.completed = !item.completed;
-      return item;
+  onChange = todo => {
+    todo.completed = !todo.completed;
+    todoApi.put(`/todos/${todo.id}`, todo)
+    .then(resp => {
+      this.setState({ todos: [...this.state.todos]})
     });
-    this.setState({ todos: newTodos})
   }
 
   onDelete = id => {
-    this.setState({todos: [...this.state.todos.filter(f => f.id !== id)]});
+    todoApi.delete(`/todos/${id}`)
+    .then(resp => {
+      this.setState({todos: [...this.state.todos.filter(f => f.id !== id)]});
+    });
   }
 
   AddTodo = title => {
