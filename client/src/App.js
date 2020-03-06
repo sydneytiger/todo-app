@@ -4,29 +4,22 @@ import { v4 as uuidv4} from 'uuid';
 import Header from './components/Header';
 import Todos from './components/Todos';
 import AddTodo from './components/AddTodo';
+import { todoApi } from './startup';
 
 import './reset.css';
 import './App.css';
 
 export class App extends React.Component {
-  state = {
-    todos: [
-      {
-        id: uuidv4(),
-        title: 'learn react',
-        completed: true
-      },
-      {
-        id: uuidv4(),
-        title: 'learn GraphQl',
-        completed: false
-      },
-      {
-        id: uuidv4(),
-        title: 'learn mysql',
-        completed: false
-      }
-    ]
+  constructor(props){
+    super(props);
+    this.state = { todos: []};
+  }
+
+  componentDidMount() {
+    todoApi.get('/todos')
+    .then(resp => {
+      this.setState({ todos: resp.data });
+    });
   }
 
   onChange = id => {
@@ -48,7 +41,11 @@ export class App extends React.Component {
       title,
       completed:false
     }
-    this.setState({ todos: [newTodo, ...this.state.todos] });
+
+    todoApi.post('/todos', newTodo)
+    .then(resp => {
+      this.setState({ todos: [resp.data, ...this.state.todos] });
+    });
   }
 
   render() {
