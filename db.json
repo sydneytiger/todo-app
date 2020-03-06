@@ -21,6 +21,16 @@
       "completed": false
     },
     {
+      "id": "faa2da1d-b3be-4283-8483-2e00593c0593",
+      "title": "Learn mysql",
+      "completed": false
+    },
+    {
+      "id": "faa3dr9c-b3be-4283-8483-2e00593c0532",
+      "title": "Learn Vuejs",
+      "completed": false
+    },
+    {
       "id": "69286824-34f1-45d7-921c-df19a1c1cae2",
       "title": "Learn RPC",
       "completed": false
