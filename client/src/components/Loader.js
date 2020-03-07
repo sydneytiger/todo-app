@@ -7,10 +7,10 @@ const Loader = ({ loading, fullscreen }) => {
     if(fullscreen){
       return (
         <React.Fragment>
-          <div className="loader-front fullscreen">
+          <div className="loader-front">
             <div className="loading"><div></div><div></div></div>
           </div>
-          <div className="loader-back fullscreen"></div>
+          <div className="loader-back"></div>
         </React.Fragment>
       )
     } else {

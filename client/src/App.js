@@ -27,21 +27,29 @@ export class App extends React.Component {
     });
   }
 
-  onChange = todo => {
-    todo.completed = !todo.completed;
+  onChange = (todo, cb) => {
+    const newTodo = {
+      id: todo.id,
+      title: todo.title,
+      completed: !todo.completed
+    }
 
-    this.setState({ loading: true });
-    todoApi.put(`/todos/${todo.id}`, todo)
+    todoApi.put(`/todos/${todo.id}`, newTodo)
     .then(resp => {
-      this.setState({ todos: [...this.state.todos], loading: false})
+      this.setState({ todos: [...this.state.todos.map(m => {
+        if(m.id === todo.id) {
+          m.completed = !m.completed;
+        }
+        return m;
+      })]});
+      cb();
     });
   }
 
   onDelete = id => {
-    this.setState({ loading: true });
     todoApi.delete(`/todos/${id}`)
     .then(resp => {
-      this.setState({todos: [...this.state.todos.filter(f => f.id !== id)], loading: false});
+      this.setState({todos: [...this.state.todos.filter(f => f.id !== id)]});
     });
   }
 
@@ -52,10 +60,9 @@ export class App extends React.Component {
       completed:false
     }
 
-    this.setState({ loading: true });
     todoApi.post('/todos', newTodo)
     .then(resp => {
-      this.setState({ todos: [resp.data, ...this.state.todos], loading: false });
+      this.setState({ todos: [resp.data, ...this.state.todos] });
     });
   }
 
@@ -68,8 +75,7 @@ export class App extends React.Component {
         <Todos 
           todos={this.state.todos} 
           onChange={this.onChange} 
-          onDelete={this.onDelete}
-          loading={this.state.loading}/>
+          onDelete={this.onDelete}/>
         <Loader 
           loading={this.state.loading} 
           fullscreen />
