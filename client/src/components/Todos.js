@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 
 function Todos({todos, onChange, onDelete}) {
   return (
-    <div>
+    <React.Fragment>
       {todos.map(todo => <TodoItem 
         todo={todo} 
         key={todo.id} 
         onChange={onChange} 
         onDelete={onDelete}/>)}
-    </div>
+    </React.Fragment>
   )
 }
 

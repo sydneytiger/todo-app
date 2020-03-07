@@ -1,35 +1,11 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*:focus {
+  outline: none !important;
 }
 
 body {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
   line-height: 1.4;
-}
-
-a {
-  color: #333;
-  text-decoration: none;
-}
-
-.container {
-  padding: 0 1rem;
-}
-
-.btn {
-  display: inline-block;
-  border: none;
-  background: #555;
-  color: #fff;
-  padding: 7px 20px;
-  cursor: pointer;
-}
-
-.btn:hover {
-  background: #666;
 }
 
 .header {
@@ -46,12 +22,7 @@ a {
 .todoItem {
   background-color: #f4f4f4;
   text-decoration: none;
-
-  width: 60%;
-  margin: 16px auto;
-  border: 1px solid #eee;
   box-shadow: 0 2px 3px #ccc;
-  padding: 16px;
 }
 
 .todoItem input[type=checkbox] {
@@ -66,54 +37,11 @@ a {
   cursor: pointer;
 }
 
-.btnDel {
-  position: relative;
-  float: right;
-  width: 32px;
-  height: 32px;
-  opacity: 0.3;
-}
-
-.btnDel:hover {
-  opacity: 1;
-}
-.btnDel:before, .btnDel:after {
-  position: absolute;
-  left: 15px;
-  top: 3px;
-  content: ' ';
-  height: 25px;
-  width: 2px;
-  background-color: #333;
-}
-.btnDel:before {
-  transform: rotate(45deg);
-}
-.btnDel:after {
-  transform: rotate(-45deg);
-}
-
 .todoItem.completed {
   text-decoration: line-through;
 }
 
 .addTodo {
-  display: flex;
-  width: 60%;
-  margin: 16px auto;
   border: 1px solid #eee;
   box-shadow: 0 2px 3px #ccc;
-  padding: 16px;
-}
-
-.addTodo input[type="submit"] {
-  flex: 1;
-  font-size: inherit;
-}
-
-.addTodo input[type="text"] {
-  flex: 10;
-  padding: 5px;
-  height: 50px;
-  font-size: inherit;
 }

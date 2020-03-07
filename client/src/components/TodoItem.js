@@ -9,32 +9,47 @@ class TodoItem extends React.Component {
   }
 
   onItemChanged = () => {
-
     this.setState({ showLoader: true });
     this.props.onChange(this.props.todo, () => { 
       this.setState({ showLoader: false 
     })});
   };
 
+  onItemDelete = () => {
+    this.setState({ showLoader: true });
+    this.props.onDelete(this.props.todo.id, () => { 
+      this.setState({ showLoader: false 
+    })});
+  }
+
   render() {
-    const {todo, onDelete} = this.props;
+    const {todo} = this.props;
 
     return (
-      <div className={`todoItem ${todo.completed ? 'completed': ''}`}>
-        <input 
-          type="checkbox" 
-          value={todo.title} 
-          checked={todo.completed} 
-          onChange={this.onItemChanged}
-          id={todo.id}
-        />
-        <label 
-          className="checkboxtext" 
-          htmlFor={todo.id}>
-          {todo.title}
-        </label>
-        <Loader loading={this.state.showLoader}></Loader>
-        <a href="#" className="btnDel" onClick={onDelete.bind(this, todo.id)} />
+      <div className="row">
+        <div className="col-1"></div>
+        <div className="col-10">
+          <div className="card my-2">
+            <div className={`card-body todoItem ${todo.completed ? 'completed': ''}`}>
+              <input 
+              type="checkbox" 
+              value={todo.title} 
+              checked={todo.completed} 
+              onChange={this.onItemChanged}
+              id={todo.id}/>
+              <label 
+                className="checkboxtext" 
+                htmlFor={todo.id}>
+                {todo.title}
+              </label>
+              <Loader loading={this.state.showLoader}></Loader>
+              <button type="button" className="close" aria-label="Close" onClick={this.onItemDelete}>
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="col-1"></div>
       </div>
     )
   }

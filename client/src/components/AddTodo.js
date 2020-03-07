@@ -1,33 +1,62 @@
 import React from 'react';
 import PropType from 'prop-types';
+import Loader from './Loader';
 
 class AddTodo extends React.Component {
-  state = { inputValue: '' }
+  constructor(props) {
+    super(props);
+    this.state = { 
+      inputValue: '',
+      showLoader: false
+    }
+  }
+
 
   handleChange = e => {
     this.setState({ inputValue: e.target.value });
   }
 
   onSubmit = e => {
-    e.preventDefault();
     if(this.state.inputValue.trim()){
-      this.props.AddTodo(this.state.inputValue);
-      this.setState({ inputValue: '' });
+      this.setState({ showLoader: true });
+      this.props.AddTodo(this.state.inputValue, () => { 
+        this.setState({ 
+          showLoader: false,
+          inputValue: ''
+      })});
     }
   }
   
   render() { 
-    return (  
-      <form onSubmit={this.onSubmit} className="addTodo">
-        <input 
-          type="text" 
-          placeholder="Add todo..." 
-          value={this.state.inputValue} 
-          onChange={this.handleChange}
-          className='textBox'
-          />
-        <input className="btn" value="Submit" type="submit"></input>
-      </form>
+    return ( 
+      <div className="row">
+        <div className="col-1"></div>
+        <div className="col-10">
+          <div className="card my-3 addTodo">
+          <div className="card-body">
+            <Loader loading={this.state.showLoader}></Loader>
+            <div className="input-group input-group-lg">
+              <input 
+                type="text" 
+                className="form-control" 
+                placeholder="Add todo..." 
+                aria-label="Add todo item" 
+                aria-describedby="btnAddTodoItem"
+                value={this.state.inputValue} 
+                onChange={this.handleChange}/>
+              <div className="input-group-append">
+                <button 
+                className="btn btn-outline-primary" 
+                type="button" 
+                id="btnAddTodoItem"
+                onClick={this.onSubmit}>Add</button>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div className="col-1"></div>
+      </div>
     );
   }
 }

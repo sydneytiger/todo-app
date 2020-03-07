@@ -7,7 +7,6 @@ import AddTodo from './components/AddTodo';
 import Loader from './components/Loader'
 import { todoApi } from './startup';
 
-import './css/reset.css';
 import './css/App.css';
 
 export class App extends React.Component {
@@ -46,14 +45,17 @@ export class App extends React.Component {
     });
   }
 
-  onDelete = id => {
+  onDelete = (id, cb) => {
     todoApi.delete(`/todos/${id}`)
     .then(resp => {
       this.setState({todos: [...this.state.todos.filter(f => f.id !== id)]});
+    }, err => {
+      console.log(err);
+      cb();
     });
   }
 
-  AddTodo = title => {
+  AddTodo = (title, cb) => {
     const newTodo = {
       id: uuidv4(),
       title,
@@ -63,23 +65,26 @@ export class App extends React.Component {
     todoApi.post('/todos', newTodo)
     .then(resp => {
       this.setState({ todos: [resp.data, ...this.state.todos] });
+      cb();
     });
   }
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <Header />
-        <AddTodo 
-          AddTodo={this.AddTodo} />
-        <Todos 
-          todos={this.state.todos} 
-          onChange={this.onChange} 
-          onDelete={this.onDelete}/>
+        <div className="container">
+          <AddTodo 
+            AddTodo={this.AddTodo} />
+          <Todos 
+            todos={this.state.todos} 
+            onChange={this.onChange} 
+            onDelete={this.onDelete}/>
+        </div>
         <Loader 
-          loading={this.state.loading} 
-          fullscreen />
-      </div>
+            loading={this.state.loading} 
+            fullscreen />
+      </React.Fragment>
     )
   }
 }
