@@ -30,6 +30,7 @@ class TodoItem extends React.Component {
         <div className="col-1"></div>
         <div className="col-10">
           <div className="card my-2">
+          <Loader loading={this.state.showLoader}></Loader>
             <div className={`card-body todoItem ${todo.completed ? 'completed': ''}`}>
               <input 
               type="checkbox" 
@@ -42,7 +43,6 @@ class TodoItem extends React.Component {
                 htmlFor={todo.id}>
                 {todo.title}
               </label>
-              <Loader loading={this.state.showLoader}></Loader>
               <button type="button" className="close" aria-label="Close" onClick={this.onItemDelete}>
                 <span aria-hidden="true">&times;</span>
               </button>

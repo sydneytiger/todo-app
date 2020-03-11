@@ -25,16 +25,15 @@ class AddTodo extends React.Component {
           inputValue: ''
       })});
     }
-  }
-  
+  }  
   render() { 
     return ( 
       <div className="row">
         <div className="col-1"></div>
         <div className="col-10">
           <div className="card my-3 addTodo">
+          <Loader loading={this.state.showLoader}></Loader>
           <div className="card-body">
-            <Loader loading={this.state.showLoader}></Loader>
             <div className="input-group input-group-lg">
               <input 
                 type="text" 
@@ -46,10 +45,12 @@ class AddTodo extends React.Component {
                 onChange={this.handleChange}/>
               <div className="input-group-append">
                 <button 
-                className="btn btn-outline-primary" 
+                className="btn btn-outline-secondary" 
                 type="button" 
                 id="btnAddTodoItem"
-                onClick={this.onSubmit}>Add</button>
+                onClick={this.onSubmit}>
+                  Add
+                </button>
               </div>
             </div>
           </div>

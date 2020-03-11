@@ -34,25 +34,32 @@ export class App extends React.Component {
     }
 
     todoApi.put(`/todos/${todo.id}`, newTodo)
-    .then(resp => {
-      this.setState({ todos: [...this.state.todos.map(m => {
-        if(m.id === todo.id) {
-          m.completed = !m.completed;
-        }
-        return m;
-      })]});
-      cb();
-    });
+    .then(resp => {this.toggleComplete(todo, cb)},
+    err => {this.toggleComplete(todo, cb)});
+  }
+
+  toggleComplete = (todo, cb) => {
+    this.setState({ todos: [...this.state.todos.map(m => {
+      if(m.id === todo.id) {
+        m.completed = !m.completed;
+      }
+      return m;
+    })]});
+    cb();
   }
 
   onDelete = (id, cb) => {
     todoApi.delete(`/todos/${id}`)
     .then(resp => {
-      this.setState({todos: [...this.state.todos.filter(f => f.id !== id)]});
+      this.removeTodo(id, cb);
     }, err => {
-      console.log(err);
-      cb();
+      this.removeTodo(id, cb);
     });
+  }
+
+  removeTodo = (id, cb) => {
+    this.setState({todos: [...this.state.todos.filter(f => f.id !== id)]});
+    cb();
   }
 
   AddTodo = (title, cb) => {
@@ -72,7 +79,7 @@ export class App extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Header />
+        <Header taskCount={this.state.todos.length} />
         <div className="container">
           <AddTodo 
             AddTodo={this.AddTodo} />
