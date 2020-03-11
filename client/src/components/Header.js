@@ -40,17 +40,19 @@ export default function Header({taskCount}) {
     <div className="header">
       <div className="container">
         <div className="row">
-          <div className="col-4">
+          <div className="col-1"></div>
+          <div className="col-5 ml-1">
             <h2>
               <span className="font-weight-bold">{getDayOfWeek()},</span> 
               {getDateOfMonth()}
-            </h2>
-            <h6>{getMonthOfYear()}</h6>
+            </h2> 
+            <h5>{getMonthOfYear()}</h5>
           </div>
-          <div className="col-3"></div>
-          <div className="col-5">
-            <h6 className="float-right mt-5 mb-3">{taskCountText()}</h6>
+          <div className="col-1"></div>
+          <div className="col-4">
+            <h5 className="float-right mt-5 mb-3 mr-4">{taskCountText()}</h5>
           </div>
+          <div className="col-1"></div>
         </div>
       </div>
     </div>

@@ -42,6 +42,7 @@ body {
 
 .todoItem.completed {
   text-decoration: line-through;
+  color: var(--secondary);
 }
 
 .addTodo {
