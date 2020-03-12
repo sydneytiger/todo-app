@@ -1,6 +1,7 @@
 import React from 'react';
 import { v4 as uuidv4} from 'uuid';
 
+import ErrorBoundary from './ErrorBoundary';
 import Header from './components/Header';
 import Todos from './components/Todos';
 import AddTodo from './components/AddTodo';
@@ -79,14 +80,19 @@ export class App extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Header taskCount={this.state.todos.length} />
+        <ErrorBoundary>
+          <Header taskCount={this.state.todos.length} />
+        </ErrorBoundary>
         <div className="container">
-          <AddTodo 
-            AddTodo={this.AddTodo} />
+        <ErrorBoundary>
+          <AddTodo AddTodo={this.AddTodo} />
+        </ErrorBoundary>
+        <ErrorBoundary>
           <Todos 
             todos={this.state.todos} 
             onChange={this.onChange} 
             onDelete={this.onDelete}/>
+          </ErrorBoundary>
         </div>
         <Loader 
             loading={this.state.loading} 
