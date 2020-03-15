@@ -1,29 +1,39 @@
 import React from 'react'
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Loader from './Loader';
 
+import {deleteTodoItem, updateTodoItem} from '../actions/todoAction';
+
 class TodoItem extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = { showLoader: false }
+  constructor(props) {
+    super(props)
+    this.state = {
+       showLoader: false
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextSate) {
+    console.log(nextProps);
+    console.log(this.props);
+    return true;
   }
 
   onItemChanged = () => {
     this.setState({ showLoader: true });
-    this.props.onChange(this.props.todo, () => { 
-      this.setState({ showLoader: false 
-    })});
+    this.props.update(this.props.todo, this.hideLoader.bind(this));
   };
+
+  hideLoader = () => {
+    this.setState({ showLoader: false });
+  }
 
   onItemDelete = () => {
     this.setState({ showLoader: true });
-    this.props.onDelete(this.props.todo.id, () => { 
-      this.setState({ showLoader: false 
-    })});
+    this.props.delete(this.props.todo.id);
   }
 
   render() {
-    const {todo} = this.props;
+    const { todo } = this.props;
 
     return (
       <div className="row">
@@ -55,10 +65,17 @@ class TodoItem extends React.Component {
   }
 }
 
-TodoItem.propTypes = {
-  todo: PropTypes.object.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired
+const mapStateToProps = state => {
+  return {
+    
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    update: (todo, cb) => dispatch(updateTodoItem(todo, cb)),
+    delete: id => dispatch(deleteTodoItem(id))
+  }
 }
 
-export default TodoItem;
+export default connect(mapStateToProps, mapDispatchToProps)(TodoItem);

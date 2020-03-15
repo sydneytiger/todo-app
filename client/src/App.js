@@ -1,5 +1,6 @@
 import React from 'react';
-import { v4 as uuidv4} from 'uuid';
+import { connect } from 'react-redux';
+import { loadTodoItems } from './actions/todoAction';
 
 import ErrorBoundary from './ErrorBoundary';
 import Header from './components/Header';
@@ -11,77 +12,16 @@ import { todoApi } from './startup';
 import './css/App.css';
 
 export class App extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = { 
-      todos: [],
-      loading: false
-    };
-  }
-
   componentDidMount() {
-    this.setState({ loading: true });
-    todoApi.get('/todos')
-    .then(resp => {
-      this.setState({ todos: resp.data, loading: false });
-    });
-  }
-
-  onChange = (todo, cb) => {
-    const newTodo = {
-      id: todo.id,
-      title: todo.title,
-      completed: !todo.completed
-    }
-
-    todoApi.put(`/todos/${todo.id}`, newTodo)
-    .then(resp => {this.toggleComplete(todo, cb)},
-    err => {this.toggleComplete(todo, cb)});
-  }
-
-  toggleComplete = (todo, cb) => {
-    this.setState({ todos: [...this.state.todos.map(m => {
-      if(m.id === todo.id) {
-        m.completed = !m.completed;
-      }
-      return m;
-    })]});
-    cb();
-  }
-
-  onDelete = (id, cb) => {
-    todoApi.delete(`/todos/${id}`)
-    .then(resp => {
-      this.removeTodo(id, cb);
-    }, err => {
-      this.removeTodo(id, cb);
-    });
-  }
-
-  removeTodo = (id, cb) => {
-    this.setState({todos: [...this.state.todos.filter(f => f.id !== id)]});
-    cb();
-  }
-
-  AddTodo = (title, cb) => {
-    const newTodo = {
-      id: uuidv4(),
-      title,
-      completed:false
-    }
-
-    todoApi.post('/todos', newTodo)
-    .then(resp => {
-      this.setState({ todos: [resp.data, ...this.state.todos] });
-      cb();
-    });
+    this.props.initLoad();
   }
 
   render() {
+    const {todos, loading} = this.props;
     return (
       <React.Fragment>
         <ErrorBoundary>
-          <Header taskCount={this.state.todos.length} />
+          <Header taskCount={todos.length} />
         </ErrorBoundary>
         <div className="container">
         <ErrorBoundary>
@@ -89,18 +29,31 @@ export class App extends React.Component {
         </ErrorBoundary>
         <ErrorBoundary>
           <Todos 
-            todos={this.state.todos} 
+            todos={todos} 
             onChange={this.onChange} 
             onDelete={this.onDelete}/>
           </ErrorBoundary>
         </div>
         <Loader 
-            loading={this.state.loading} 
+            loading={loading} 
             fullscreen />
       </React.Fragment>
     )
   }
 }
 
-export default App
+const mapStateToProps = state => {
+  return {
+    todos: state.todos,
+    loading: state.loading
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    initLoad: () => dispatch(loadTodoItems())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 

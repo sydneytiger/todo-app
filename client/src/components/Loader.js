@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-type';
 import '../css/loader.css';
 
 const Loader = ({ loading, fullscreen }) => {
@@ -31,9 +30,5 @@ const Loader = ({ loading, fullscreen }) => {
     return null;
   }
 };
-
-Loader.propTypes = {
-  loading: PropTypes.bool
-}
 
 export default Loader;

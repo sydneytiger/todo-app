@@ -1,23 +1,23 @@
 import React from 'react'
 import TodoItem from './TodoItem';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-function Todos({todos, onChange, onDelete}) {
+
+function Todos(props) {
+  const {todos} = props;
   return (
     <React.Fragment>
       {todos.map(todo => <TodoItem 
         todo={todo} 
-        key={todo.id} 
-        onChange={onChange} 
-        onDelete={onDelete}/>)}
+        key={todo.id}/>)}
     </React.Fragment>
   )
 }
 
-Todos.propTypes = {
-  todos: PropTypes.array.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired
+const mapStateToProps = state => {
+  return {
+    todos: state.todos
+  }
 }
 
-export default Todos;
+export default connect(mapStateToProps)(Todos);
