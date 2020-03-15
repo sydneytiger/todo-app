@@ -1,0 +1,38 @@
+.spinner-xl {
+  width: 4rem;
+  height: 4rem;
+}
+
+.spinner-center {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  align-items: center;
+}
+
+.loader-front, .loader-back {
+  position: fixed;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  opacity: 0;
+  width: 100%;
+  transition: all 1s;
+}
+
+.loader-front {
+  z-index: 999;
+  margin-top: 45vh;
+  text-align: center;
+  visibility: visible;
+  opacity: 1;
+}
+
+.loader-back {
+  z-index: 998;
+  height: 100vh;
+  background: #aaa;
+  visibility: visible;
+  opacity: 0.7;
+}
