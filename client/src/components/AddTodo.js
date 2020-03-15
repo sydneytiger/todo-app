@@ -2,22 +2,43 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Loader from './Loader';
 
-import { updateInputTitle } from '../actions/addTodoAction';
 import { addTodoItem } from '../actions/todoAction';
 
 class AddTodo extends React.Component {
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+       inputValue: '',
+       showLoader: false
+    }
+  }
+  
   handleChange = e => {
-    this.props.updateTitle(e.target.value);
+    this.setState({ inputValue: e.target.value });
   }
 
   onSubmit = e => {
-    if(this.props.inputedTitle.trim()){
-      this.props.addTodo(this.props.inputedTitle.trim());
+    e.preventDefault();
+    if(this.state.inputValue.trim()){
+      this.setState({ showLoader: true });
+      this.props.addTodo(
+        this.state.inputValue.trim(), 
+        this.clearInput.bind(this), 
+        this.hideLoader.bind(this));
     }
   }
 
+  clearInput = () => {
+    this.setState({ inputValue: '' });
+  }
+
+  hideLoader = () => {
+    this.setState({ showLoader: false });
+  }
+
   render() { 
-    const {showLoader, inputedTitle} = this.props;
+    const {showLoader, inputValue} = this.state;
     return ( 
       <div className="row">
         <div className="col-1"></div>
@@ -32,7 +53,7 @@ class AddTodo extends React.Component {
                 placeholder="Add todo..." 
                 aria-label="Add todo item" 
                 aria-describedby="btnAddTodoItem"
-                value={inputedTitle} 
+                value={inputValue} 
                 onChange={this.handleChange}/>
               <div className="input-group-append">
                 <button 
@@ -53,18 +74,11 @@ class AddTodo extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    inputedTitle: state.addTodo.inputedTitle,
-    showLoader: state.addTodo.showLoader
-  }
-}
-
 const mapDispatchToProps = dispatch => {
   return {
-    addTodo: title => dispatch(addTodoItem(title)),
-    updateTitle: title => dispatch(updateInputTitle(title))
+    addTodo: (title, clearInputCb, hideLoaderCb) => 
+      dispatch(addTodoItem(title, clearInputCb, hideLoaderCb))
   }
 }
  
-export default connect(mapStateToProps, mapDispatchToProps)(AddTodo);
+export default connect(null, mapDispatchToProps)(AddTodo);

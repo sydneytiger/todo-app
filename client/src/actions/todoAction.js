@@ -1,7 +1,6 @@
 import { v4 as uuidv4} from 'uuid';
 import { todoApi } from '../startup';
 import actionVerbs from '../actionVerbs';
-import { updateInputTitle, toggleLoader } from './addTodoAction';
 
 const updateTodoItem = (todo, cb) => dispatch => {
   const newTodo = {
@@ -38,13 +37,13 @@ const _removeTodo = (id, dispatch) => {
   });
 }
 
-const addTodoItem = title => dispatch => {
+const addTodoItem = (title, clearInputCb, hideLoaderCb) => dispatch => {
   const newTodo = {
     id: uuidv4(),
     title,
     completed:false
   };
-  dispatch(toggleLoader(true));
+
   todoApi.post('/todos', newTodo)
   .then(
     resp => {
@@ -52,31 +51,24 @@ const addTodoItem = title => dispatch => {
         type: actionVerbs.todos.addSingle,
         payload: newTodo
       });
-      dispatch(toggleLoader(false));
-      dispatch(updateInputTitle(''));
+      clearInputCb();
+      hideLoaderCb();
     }
   );
 }
 
-const loadTodoItems = () => dispatch => {
-  dispatch({
-    type:actionVerbs.loading.enable
-  });
+const loadTodoItems = cb => dispatch => {
   todoApi.get('/todos')
     .then(resp => {
       dispatch({
         type:actionVerbs.todos.addMulti,
         payload: resp.data
-      })
-      dispatch({
-        type:actionVerbs.loading.disable
       });
+      cb();
     },
     err => {
       console.log(err);
-      dispatch({
-        type:actionVerbs.loading.disable
-      });
+      cb();
     });
 }
 

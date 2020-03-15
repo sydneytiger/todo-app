@@ -7,17 +7,29 @@ import Header from './components/Header';
 import Todos from './components/Todos';
 import AddTodo from './components/AddTodo';
 import Loader from './components/Loader'
-import { todoApi } from './startup';
 
 import './css/App.css';
 
 export class App extends React.Component {
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+       loading: false
+    }
+  }
+  
   componentDidMount() {
-    this.props.initLoad();
+    this.setState({ loading: true });
+    this.props.initLoad(this.hideLoading.bind(this));
   }
 
+  hideLoading = () => {
+    this.setState({ loading: false });
+  } 
+
   render() {
-    const {todos, loading} = this.props;
+    const {todos} = this.props;
     return (
       <React.Fragment>
         <ErrorBoundary>
@@ -35,7 +47,7 @@ export class App extends React.Component {
           </ErrorBoundary>
         </div>
         <Loader 
-            loading={loading} 
+            loading={this.state.loading} 
             fullscreen />
       </React.Fragment>
     )
@@ -44,14 +56,13 @@ export class App extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    todos: state.todos,
-    loading: state.loading
+    todos: state.todos
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    initLoad: () => dispatch(loadTodoItems())
+    initLoad: cb => dispatch(loadTodoItems(cb))
   }
 }
 

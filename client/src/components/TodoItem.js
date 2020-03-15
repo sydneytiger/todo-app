@@ -12,12 +12,6 @@ class TodoItem extends React.Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextSate) {
-    console.log(nextProps);
-    console.log(this.props);
-    return true;
-  }
-
   onItemChanged = () => {
     this.setState({ showLoader: true });
     this.props.update(this.props.todo, this.hideLoader.bind(this));
