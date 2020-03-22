@@ -9,13 +9,24 @@ describe('Testing Header component', () => {
     expect(wrapper.length).toBe(1);
   });
 
-  it('should has a default taskCount and displayDate', () => {
-    const component = shallow(<Header ></Header>);
-    const properties = component.instance().props;
+  describe('Testing default props', () => {
+    let properties;
+    beforeAll(() => {
+      const component = shallow(<Header ></Header>);
+      properties = component.instance().props;
+    });
 
-    expect(properties.taskCount).toBe(0);
-    //expect(properties.displayDate).toEqual(new Date());
-  })
+    it('should has a default taskCount of 0', () => {
+      expect(properties.taskCount).toBe(0);
+    })
+
+    it('should has a default displayDate of today', () => {
+      expect(properties.displayDate.dayIndex).toEqual(new Date().getDay());
+      expect(properties.displayDate.monthIndex).toEqual(new Date().getMonth());
+      expect(properties.displayDate.date).toEqual(new Date().getDate());
+    });
+  });
+
 
   describe('testing taskcount display', () => {
     it('should render 3 tasks', () => {
@@ -40,13 +51,18 @@ describe('Testing Header component', () => {
   describe('testing date display', () => {
     let component;
     beforeAll(() => {
-      const date = new Date('August 19, 1975 23:15:30');
-      component = shallow(<Header displayDate={date}></Header>);
+      const testDate = new Date('August 19, 1975 23:15:30');
+      const displayDateVal = {
+        dayIndex: testDate.getDay(),
+        monthIndex: testDate.getMonth(),
+        date: testDate.getDate()
+      }
+      component = shallow(<Header displayDate={displayDateVal}></Header>);
     });
 
     it('should display day correctly', () => {
       const wrapper = component.find('.test-day');
-      expect(wrapper.text()).toEqual('Wednesday,');
+      expect(wrapper.text()).toEqual('Tuesday,');
     });
   
     it('should display date correctly', () => {

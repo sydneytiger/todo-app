@@ -4,26 +4,34 @@ import PropTypes from 'prop-types';
 class Header extends React.PureComponent{
   static propTypes = {
     taskCount: PropTypes.number,
-    displayDate: PropTypes.object
+    displayDate: PropTypes.shape({
+      dayIndex: PropTypes.number,
+      monthIndex: PropTypes.number,
+      date: PropTypes.number
+    })
   }
 
   static defaultProps = {
     taskCount: 0,
-    displayDate: new Date()
+    displayDate: {
+      dayIndex: new Date().getDay(),
+      monthIndex: new Date().getMonth(),
+      date: new Date().getDate()
+    }
   }
 
   getDayOfWeek = () => {
-    const dayOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-    return dayOfWeek[this.props.displayDate.getDay()];
+    const dayOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return dayOfWeek[this.props.displayDate.dayIndex ];
   }
 
   getMonthOfYear = () => {
     const monthOfYear = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    return monthOfYear[this.props.displayDate.getMonth()];
+    return monthOfYear[this.props.displayDate.monthIndex];
   }
 
   getDateOfMonth = () => {
-    const date = this.props.displayDate.getDate();
+    const { date } = this.props.displayDate;
     switch(date) {
       case 1:
       case 21:

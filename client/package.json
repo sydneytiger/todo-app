@@ -22,7 +22,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "deploy": "react-scripts build; aws s3 sync ./build s3://todo.tigerchen.dev --delete",
-    "test": "react-scripts test",
+    "test": "react-scripts test --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
