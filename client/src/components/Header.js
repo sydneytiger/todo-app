@@ -60,10 +60,10 @@ class Header extends React.PureComponent{
             <div className="col-1"></div>
             <div className="col-5 ml-1">
               <h2>
-                <span className="font-weight-bold mr-2 test-day">{this.getDayOfWeek()},</span> 
-                <span className="test-date">{this.getDateOfMonth()}</span>
+                <span className="font-weight-bold mr-2 test-day">{this.getDayOfWeek()}</span> 
+                <span className="test-date mr-2">{this.getDateOfMonth()}</span>
+                <span className="test-month">{this.getMonthOfYear()}</span>
               </h2> 
-              <h5 className="test-month">{this.getMonthOfYear()}</h5>
             </div>
             <div className="col-1"></div>
             <div className="col-4">

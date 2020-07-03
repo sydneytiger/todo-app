@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import Loader from './Loader';
-
 import {deleteTodoItem, updateTodoItem} from '../actions/todoAction';
 
 class TodoItem extends React.Component {
@@ -59,12 +58,6 @@ class TodoItem extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    
-  }
-};
-
 const mapDispatchToProps = dispatch => {
   return {
     update: (todo, cb) => dispatch(updateTodoItem(todo, cb)),
@@ -72,4 +65,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TodoItem);
+export default connect(null, mapDispatchToProps)(TodoItem);

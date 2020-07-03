@@ -2,9 +2,13 @@
 /* eslint-disable no-undef */
 import Header from '../components/Header';
 
+const setup = (props = {}) => {
+  return shallow(<Header {...props} />);
+};
+
 describe('Testing Header component', () => {
   it('should render without error', () => {
-    const component = shallow(<Header ></Header>);
+    const component = setup();
     const wrapper = component.find('.header');
     expect(wrapper.length).toBe(1);
   });
@@ -12,7 +16,7 @@ describe('Testing Header component', () => {
   describe('Testing default props', () => {
     let properties;
     beforeAll(() => {
-      const component = shallow(<Header ></Header>);
+      const component = setup();
       properties = component.instance().props;
     });
 
@@ -30,19 +34,19 @@ describe('Testing Header component', () => {
 
   describe('testing taskcount display', () => {
     it('should render 3 tasks', () => {
-      const component = shallow(<Header taskCount="3"></Header>);
+      const component = setup({taskCount: 3})
       const wrapper = component.find('.test-taskCount');
       expect(wrapper.text()).toBe('3 tasks');
     });
   
     it('should render 1 task', () => {
-      const component = shallow(<Header taskCount="1"></Header>);
+      const component = setup({taskCount: 1})
       const wrapper = component.find('.test-taskCount');
       expect(wrapper.text()).toBe('1 task');
     });
   
     it('should render 0 task', () => {
-      const component = shallow(<Header taskCount="0"></Header>);
+      const component = setup({taskCount: 0})
       const wrapper = component.find('.test-taskCount');
       expect(wrapper.text()).toBe('0 task');
     });
@@ -57,7 +61,8 @@ describe('Testing Header component', () => {
         monthIndex: testDate.getMonth(),
         date: testDate.getDate()
       }
-      component = shallow(<Header displayDate={displayDateVal}></Header>);
+
+      component = setup({displayDate:displayDateVal});
     });
 
     it('should display day correctly', () => {
